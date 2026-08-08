@@ -49,15 +49,12 @@ Attributes _attrs({
   int? serverPort,
 }) =>
     OTel.attributesFromMap(<String, Object>{
-      Database.dbSystem.key: _dbSystem,
-      Database.dbSystemName.key: _dbSystem,
-      if (operation != null) Database.dbOperation.key: operation,
-      if (operation != null) Database.dbOperationName.key: operation,
-      if (key != null) Database.dbCollectionName.key: key,
-      if (namespace != null) Database.dbNamespace.key: namespace,
-      if (serverAddress != null)
-        ServerResource.serverAddress.key: serverAddress,
-      if (serverPort != null) ServerResource.serverPort.key: serverPort,
+      Db.dbSystemName.key: _dbSystem,
+      if (operation != null) Db.dbOperationName.key: operation,
+      if (key != null) Db.dbCollectionName.key: key,
+      if (namespace != null) Db.dbNamespace.key: namespace,
+      if (serverAddress != null) Server.serverAddress.key: serverAddress,
+      if (serverPort != null) Server.serverPort.key: serverPort,
     });
 
 /// Runs [invoke] inside a CLIENT-kind span named `<OP> <key>` (or just
@@ -106,7 +103,7 @@ Future<R> tracedRedisCall<R>({
     span.addAttributes(
       OTel.attributes([
         OTel.attributeString(
-          ErrorResource.errorType.key,
+          ErrorAttributes.errorType.key,
           e.runtimeType.toString(),
         ),
       ]),
