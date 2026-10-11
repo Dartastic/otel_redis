@@ -1,7 +1,7 @@
 // Licensed under the Apache License, Version 2.0
 // Copyright 2025, Mindful Software LLC, All rights reserved.
 
-import 'package:dartastic_opentelemetry/dartastic_opentelemetry.dart';
+import 'package:dartastic_opentelemetry_api/dartastic_opentelemetry_api.dart';
 import 'package:redis/redis.dart' as r;
 
 import 'otel_redis_suppression.dart';
@@ -9,7 +9,7 @@ import 'otel_redis_suppression.dart';
 const _tracerName = 'otel_redis';
 const _dbSystem = 'redis';
 
-Tracer _tracer() => OTel.tracerProvider().getTracer(_tracerName);
+APITracer _tracer() => OTelAPI.tracerProvider().getTracer(_tracerName);
 
 /// Uppercases the first element of a Redis command array.
 ///
@@ -48,7 +48,7 @@ Attributes _attrs({
   String? serverAddress,
   int? serverPort,
 }) =>
-    OTel.attributesFromMap(<String, Object>{
+    OTelAPI.attributesFromMap(<String, Object>{
       Db.dbSystemName.key: _dbSystem,
       if (operation != null) Db.dbOperationName.key: operation,
       if (key != null) Db.dbCollectionName.key: key,
@@ -101,8 +101,8 @@ Future<R> tracedRedisCall<R>({
     return await invoke();
   } catch (e, st) {
     span.addAttributes(
-      OTel.attributes([
-        OTel.attributeString(
+      OTelAPI.attributes([
+        OTelAPI.attributeString(
           ErrorAttributes.errorType.key,
           e.runtimeType.toString(),
         ),
