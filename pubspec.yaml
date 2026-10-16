@@ -1,8 +1,7 @@
 name: otel_redis
 description: >-
-  OpenTelemetry instrumentation for package:redis. Wraps Redis commands in
-  CLIENT-kind spans following OTel stable database semantic conventions
-  (db.system.name=redis).
+  OpenTelemetry instrumentation for redis by Dartastic.io. Adds standard
+  OpenTelemetry observability to applications that use redis.
 version: 0.3.1-wip
 repository: https://github.com/dartastic/otel_redis
 homepage: https://dartastic.io
